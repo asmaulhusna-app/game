@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>99 имён Аллаха</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <header>
+    
+    <div class="floating-controls hidden-mobile" id="pair-controls">
+      <button onclick="changePairCount(-1)">-</button>
+      <span id="pair-count-display">3</span>
+      <button onclick="changePairCount(1)">+</button>
+      <div class="floating-toggle" onclick="toggleFloating()">-></div> 
+       <!--Уберешь коммент будет ЭКСПЕРИМАНТАЛЬНАЯ ВОЗМОЖНОСТЬ круто же да?-->
+    </div>
+
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Тема</button>
+     <div id="round-counter" class="round-counter">0</div>
+    <button class="gallery-toggle" onclick="toggleGallery()">📚 Галерея</button>
+    <div class="gallery" id="gallery"></div>
+  </header>
+  
+  <main>
+    <div class="grid" id="game-grid"></div>
+  </main>
+
+  <div id="accuracy-popup" class="popup hidden">
+    <div class="popup-content">
+      <p id="accuracy-text"></p>
+      <button onclick="closeAccuracyPopup()">OK</button>
+    </div>
+  </div>
+  <div id="detail-popup" class="popup hidden">
+    <div class="popup-content">
+      <h3 id="detail-title"></h3>
+      <p id="detail-text"></p>
+      <button onclick="closeDetailPopup()">Закрыть</button>
+    </div>
+  </div>
+
+  <script src="names.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>  
