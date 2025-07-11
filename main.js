@@ -80,6 +80,7 @@ function handleClick(item, el) {
       [a.el, b.el].forEach(e => {
         e.classList.remove('selected');
         e.classList.add('matched');
+        void e.offsetWidth;
       });
 
       matched.push(a.item.translit);
