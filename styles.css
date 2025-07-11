@@ -28,7 +28,7 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* ==================== кнопки и шапка то есть header ==================== */
+/* ==================== кнопки и шапка ==================== */
 header {
   display: flex;
   justify-content: space-between;
@@ -37,7 +37,6 @@ header {
   flex-wrap: wrap;
   gap: 16px;
 }
-
 .theme-toggle,
 .gallery-toggle {
   font-size: 0.95rem;
@@ -50,12 +49,10 @@ header {
   transition: background 0.25s ease, transform 0.1s ease;
   user-select: none;
 }
-
 .theme-toggle:hover,
 .gallery-toggle:hover {
   transform: scale(1.03);
 }
-
 .theme-toggle:active,
 .gallery-toggle:active {
   background-color: var(--bg);
@@ -69,23 +66,19 @@ main {
   justify-content: center;
   padding: 16px;
 }
-
 .grid {
   display: grid;
   gap: 16px;
 }
-
 @media (min-width: 500px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, auto);
   }
-
   header {
     justify-content: space-between;
   }
 }
-
 @media (max-width: 500px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -115,34 +108,28 @@ main {
   animation: fadeIn 0.8s ease;
   user-select: none;
 }
-
 .card div {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-align: center;
 }
-
 .card:hover {
   background: var(--accent);
   color: white;
   transform: scale(1.03);
 }
-
 .card.selected {
   background: var(--accent);
   color: white;
 }
-
 .card.matched {
   opacity: 0.5;
   pointer-events: none;
 }
-
 .card:active {
   transform: scale(0.98);
 }
-
 .card .arabic {
   font-size: 1.65rem;
   font-family: 'Amiri', serif;
@@ -150,14 +137,13 @@ main {
   direction: rtl;
   margin-bottom: 4px;
 }
-
 .card .translit {
   font-weight: 600;
   font-size: 0.946rem;
   opacity: 0.85;
 }
 
-/* ==================== галерия ==================== */
+/* ==================== галерея ==================== */
 .gallery {
   position: absolute;
   top: 60px;
@@ -177,7 +163,6 @@ main {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   max-height: 0;
 }
-
 .gallery.show {
   max-height: 550px;
   opacity: 1;
@@ -186,7 +171,6 @@ main {
   overflow-y: auto;
   animation: galleryFlash 0.1s ease;
 }
-
 .gallery-item {
   cursor: pointer;
   padding: 8px;
@@ -196,7 +180,6 @@ main {
   color: var(--text);
   user-select: text;
 }
-
 .gallery-item:hover {
   background: var(--accent);
   color: white;
@@ -207,48 +190,56 @@ main {
   transform: scale(0.99);
   color: var(--text);
 }
-
 .gallery-item .arabic {
   font-family: 'Amiri', serif;
   font-size: 2rem;
   margin-bottom: 4px;
   direction: rtl;
 }
-
 .gallery-item .translit {
   font-size: 1rem;
   font-weight: 600;
   opacity: 0.85;
 }
-
 .gallery-item .meaning {
   font-weight: 500;
   margin: 4px 0;
 }
-
 .gallery-item .description {
   font-size: 0.9rem;
   margin-top: 6px;
   opacity: 0.85;
 }
 
-
 /* ==================== все попапы ==================== */
 .popup {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   padding: 12px;
-  animation: popupFadeIn 0.35s ease forwards;
 }
-
+.popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  animation: backdropFadeIn 0.3s forwards;
+  z-index: -1;
+}
+.popup-button:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.1s ease;
+  user-select: none;
+}
+.popup-button:active {
+  transform: scale(0.96);
+}
 .popup-content {
   font-size: 0.9rem;
-  
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   padding: 24px 32px;
@@ -257,16 +248,39 @@ main {
   text-align: left;
   max-width: 600px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: scale(0.95);
+  animation: popupFadeIn 0.3s ease forwards;
+}
+.popup.hide .popup-backdrop {
+  animation: backdropFadeOut 0.3s forwards;
+}
+.popup.hide .popup-content {
+  animation: popupFadeOut 0.3s ease forwards;
+}
+.hidden {
+  display: none;
+}
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.popup-content h3 {
-  margin-bottom: 12px;
-  font-size: 1.1rem;
-  font-weight: 600;
+@keyframes backdropFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes popupFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
 .detail-arabic {
   margin-bottom: 2px;
-  
   font-size: 2.65rem;
   font-weight: 400;
 }
@@ -279,36 +293,6 @@ main {
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  
-}
-.popup.hide {
-  animation: popupFadeOut 0.3s ease forwards;
-}
-
-.hidden {
-  display: none;
-}
-
-@keyframes popupFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes popupFadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.96);
-  }
 }
 
 /* ==================== счестик ==================== */
@@ -329,23 +313,19 @@ main {
   width: 8px;
   height: 10px;
 }
-
 *::-webkit-scrollbar-track {
   background-color: var(--card-bg);
 }
-
 body:not(.dark) *::-webkit-scrollbar-thumb {
   background-color: #b0b0b0;
   border-radius: 6px;
 }
-
 body.dark *::-webkit-scrollbar-thumb {
   background-color: #36404e;
   border-radius: 6px;
 }
 
-/* ==================== всякое ==================== */
-
+/* ==================== анимации ==================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -356,7 +336,6 @@ body.dark *::-webkit-scrollbar-thumb {
     transform: scale(1);
   }
 }
-
 @keyframes galleryFlash {
   from {
     opacity: 0.5;
@@ -365,7 +344,8 @@ body.dark *::-webkit-scrollbar-thumb {
     opacity: 1;
   }
 }
-/* ==================== Экспериментальная возможность ==================== */
+
+/* ==================== Плавающая панель ==================== */
 .floating-controls {
   position: fixed;
   bottom: 16px;
@@ -379,8 +359,11 @@ body.dark *::-webkit-scrollbar-thumb {
   gap: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   z-index: 999;
+  transition: transform 0.3s ease;
 }
-
+.floating-controls.hidden-mobile {
+  transform: translateX(-120%);
+}
 .floating-controls button {
   background: var(--card-bg);
   border: none;
@@ -393,27 +376,13 @@ body.dark *::-webkit-scrollbar-thumb {
   line-height: 1;
   padding: 0;
 }
-.floating-controls {
-  transition: transform 0.3s ease;
-}
-
-.floating-controls.hidden-mobile {
-  transform: translateX(-120%);
-}
-
 .floating-toggle {
   position: absolute;
-  
   right: -26px;
-  
-  
   background: transparent;
   color: var(--text);
-  
-  
   font-size: 1.1rem;
   cursor: pointer;
-  
 }
 
 #pair-count-display {
@@ -422,11 +391,10 @@ body.dark *::-webkit-scrollbar-thumb {
   text-align: center;
   color: var(--text);
 }
+
 .small-arabic {
   font-size: 1.1rem !important;
- 
 }
-
 .small-translit {
   font-size: 0.8rem !important;
   line-height: 1.1;
