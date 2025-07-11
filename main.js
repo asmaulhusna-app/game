@@ -79,7 +79,7 @@ function handleClick(item, el) {
     if (isMatch) {
       [a.el, b.el].forEach(e => {
         e.classList.remove('selected');
-        // 🔧 принудительно обновляем layout
+        e.style.background = ''; // сброс на дефолт
         void e.offsetWidth;
         e.classList.add('matched');
       });
