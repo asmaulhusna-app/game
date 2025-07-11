@@ -29,7 +29,6 @@ function createCard(item) {
   return card;
 }
 
-// Универсальное закрытие попапа с анимацией
 function closePopup(popupId) {
   const popup = document.getElementById(popupId);
   if (!popup) return;
@@ -39,7 +38,7 @@ function closePopup(popupId) {
   setTimeout(() => {
     popup.classList.add('hidden');
     popup.classList.remove('hide');
-  }, 300); // должен совпадать с CSS-анимацией
+  }, 300);
 }
 
 function renderGameRound() {
@@ -77,19 +76,38 @@ function handleClick(item, el) {
     const isMatch = a.item.translit === b.item.translit && a.item.type !== b.item.type;
 
     if (isMatch) {
+      // Убираем selected и применяем matched с задержкой, чтобы избежать зависаний
       [a.el, b.el].forEach(e => {
         e.classList.remove('selected');
-        e.style.background = ''; // сброс на дефолт
-        void e.offsetWidth;
-        e.classList.add('matched');
+        e.style.background = '';
+        e.style.color = '';
       });
-      matched.push(a.item.translit);
-      if (matched.length === pairCount) {
-        setTimeout(onRoundComplete, 600);
-      }
-    } else {
+
       setTimeout(() => {
-        [a.el, b.el].forEach(e => e.classList.remove('selected'));
+        [a.el, b.el].forEach(e => {
+          e.classList.add('matched');
+          e.style.background = '';
+          e.style.color = '';
+        });
+
+        matched.push(a.item.translit);
+        if (matched.length === pairCount) {
+          setTimeout(onRoundComplete, 600);
+        }
+      }, 20);
+    } else {
+      // Если не совпало — снять selected и стили, чтобы не зависало
+      setTimeout(() => {
+        [a.el, b.el].forEach(e => {
+          e.classList.remove('selected');
+          e.style.background = '';
+          e.style.color = '';
+          e.style.transition = 'none';
+
+          setTimeout(() => {
+            e.style.transition = '';
+          }, 50);
+        });
       }, 600);
     }
 
@@ -115,13 +133,11 @@ function onRoundComplete() {
   }
 }
 
-// закрытие accuracy popup с анимацией
 function closeAccuracyPopup() {
   closePopup('accuracy-popup');
   renderGameRound();
 }
 
-// закрытие detail popup с анимацией
 function closeDetailPopup() {
   closePopup('detail-popup');
 }
@@ -140,20 +156,16 @@ function createGalleryItem(n, index) {
 }
 
 function renderGallery() {
-  gallery.innerHTML = '<div class="gallery-content" id="gallery-content"></div>';
-  const container = document.getElementById('gallery-content');
+  gallery.innerHTML = '';
   names.forEach((n, i) => {
-    container.appendChild(createGalleryItem(n, i));
+    gallery.appendChild(createGalleryItem(n, i));
   });
 }
-
 
 let isAnimating = false;
 
 function toggleGallery() {
   const g = document.getElementById('gallery');
-
-  // Если сейчас в процессе анимации — игнорируем клик
   if (isAnimating) return;
 
   const isVisible = g.classList.contains('visible');
@@ -173,7 +185,6 @@ function toggleGallery() {
     g.addEventListener('transitionend', onEnd);
   } else {
     g.classList.add('showing');
-    // Дать время на отрисовку перед добавлением visible
     requestAnimationFrame(() => {
       isAnimating = true;
       g.classList.add('visible');
@@ -189,7 +200,6 @@ function toggleGallery() {
     });
   }
 }
-
 
 function showDetailPopup(obj) {
   document.getElementById('detail-title').innerHTML =
