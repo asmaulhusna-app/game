@@ -46,7 +46,7 @@ header {
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.1s ease;
+  transition: background 0.25s ease, transform 0.2s ease;
   user-select: none;
 }
 .theme-toggle:hover,
@@ -153,25 +153,46 @@ main {
   z-index: 999;
   max-width: 600px;
   margin: 0 auto;
-  opacity: 0;
-  overflow: hidden;
-  transform: translateY(-10px);
-  transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 0 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  max-height: 0;
-}
-.gallery.show {
-  max-height: none;
-  opacity: 1;
-  transform: translateY(0);
+  border-radius: 16px;
   padding: 12px;
+  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.3);
+
   overflow-y: auto;
-  animation: galleryFlash 0.1s ease;
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(-20px) scale(0.96);
+  clip-path: inset(0 0 100% 0 round 16px); /* как крвер мниз */
+  pointer-events: none;
+  display: none;
+  
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+    clip-path 0.5s ease;
 }
+
+.gallery.showing {
+  display: block;
+}
+
+.gallery.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  clip-path: inset(0 0 0 0 round 16px); /* КОВЕр вниз виууп */
+  pointer-events: auto;
+}
+
+.gallery-content {
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 12px;  /* 🎯 отодвигает скролл трек */
+}
+
+
 .gallery-item {
   cursor: pointer;
   padding: 8px;
@@ -311,7 +332,7 @@ main {
 
 /* ==================== скролл ==================== */
 *::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
   height: 10px;
 }
 *::-webkit-scrollbar-track {
@@ -322,7 +343,7 @@ body:not(.dark) *::-webkit-scrollbar-thumb {
   border-radius: 6px;
 }
 body.dark *::-webkit-scrollbar-thumb {
-  background-color: #36404e;
+  background-color: var(--card-border);
   border-radius: 6px;
 }
 
