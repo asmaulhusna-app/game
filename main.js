@@ -141,10 +141,31 @@ function createGalleryItem(n, index) {
 }
 
 function renderGallery() {
-  gallery.innerHTML = '<div class="gallery-content" id="gallery-content"></div>';
+  gallery.innerHTML = `
+    <div class="gallery-content" id="gallery-content">
+      <input type="text" id="gallery-search" placeholder="Поиск..." class="gallery-search">
+    </div>
+  `;
   const container = document.getElementById('gallery-content');
   names.forEach((n, i) => {
     container.appendChild(createGalleryItem(n, i));
+  });
+
+  // 🎯 Подключаем поиск
+  setupGallerySearch();
+}
+
+function setupGallerySearch() {
+  const searchInput = document.getElementById('gallery-search');
+
+  searchInput.addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    const items = document.querySelectorAll('.gallery-item');
+
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(query) ? '' : 'none';
+    });
   });
 }
 
