@@ -77,26 +77,51 @@ function handleClick(item, el) {
     const isMatch = a.item.translit === b.item.translit && a.item.type !== b.item.type;
 
     if (isMatch) {
+      // → Сначала жёстко сбрасываем selected
       [a.el, b.el].forEach(e => {
         e.classList.remove('selected');
-        e.classList.add('matched');
-        // Force reflow (чтобы точно перерисовалось)
-        void e.offsetWidth;
+        e.style.backgroundColor = '';
+        e.style.color = '';
       });
-      
-      matched.push(a.item.translit);
-      if (matched.length === pairCount) {
-        setTimeout(onRoundComplete, 600);
-      }
-    } else {
+
+      // → Через пару милисекунд добавляем matched
       setTimeout(() => {
-        [a.el, b.el].forEach(e => e.classList.remove('selected'));
+        [a.el, b.el].forEach(e => {
+          e.classList.add('matched');
+          // повторный сброс inline-стилей на всякий случай
+          e.style.backgroundColor = '';
+          e.style.color = '';
+        });
+
+        matched.push(a.item.translit);
+        if (matched.length === pairCount) {
+          setTimeout(onRoundComplete, 600);
+        }
+      }, 30);
+
+    } else {
+      // → Неправильная пара: снимаем selected с задержкой и жёстко обнуляем стили
+      setTimeout(() => {
+        [a.el, b.el].forEach(e => {
+          e.classList.remove('selected');
+
+          // принудительный сброс стилей, чтобы избавиться от 'accent'
+          e.style.backgroundColor = '';
+          e.style.color = '';
+
+          // на всякий случай сброс transition, чтобы не дергалось
+          const prevTrans = e.style.transition;
+          e.style.transition = 'none';
+          // и восстанавливаем через мгновение
+          setTimeout(() => e.style.transition = prevTrans || '', 50);
+        });
       }, 600);
     }
 
     selected = [];
   }
 }
+
 
 function onRoundComplete() {
   roundsCompleted++;
