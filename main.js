@@ -79,11 +79,10 @@ function handleClick(item, el) {
     if (isMatch) {
       [a.el, b.el].forEach(e => {
         e.classList.remove('selected');
-        e.classList.add('matched');
-        // Force reflow (чтобы точно перерисовалось)
+        // 🔧 принудительно обновляем layout
         void e.offsetWidth;
+        e.classList.add('matched');
       });
-      
       matched.push(a.item.translit);
       if (matched.length === pairCount) {
         setTimeout(onRoundComplete, 600);
