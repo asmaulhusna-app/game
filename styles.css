@@ -60,7 +60,36 @@ header {
   transform: scale(0.96);
 }
 
-/* ==================== сетка ==================== */
+
+/*  Убираем синий фон при нажатии на мобилах */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==================== Hover эффекты (только для ПК) ==================== */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.03);
+  }  
+  .gallery-item:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.01);
+  }
+}
+/* ==================== Header ==================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ==================== Сетка ==================== */
 main {
   display: flex;
   justify-content: center;
@@ -93,7 +122,7 @@ main {
   border-radius: 12px;
   text-align: center;
   color: var(--text);
-  transition: transform 0.2s, background 0.3s, color 0.3s;
+  transition: 0.3s ease;
   cursor: pointer;
   padding: 8px;
   font-size: 0.9rem;
@@ -105,7 +134,7 @@ main {
   width: 100%;
   height: 110px;
   aspect-ratio: 1.5 / 1;
-  animation: fadeIn 0.8s ease;
+  animation: fadeIn 0.6s ease;
   user-select: none;
 }
 .card div {
@@ -114,21 +143,17 @@ main {
   overflow: hidden;
   text-align: center;
 }
-.card:hover {
-  background: var(--accent);
-  color: white;
-  transform: scale(1.03);
-}
 .card.selected {
   background: var(--accent);
   color: white;
+
 }
 .card.matched {
   opacity: 0.5;
   pointer-events: none;
 }
 .card:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 .card .arabic {
   font-size: 1.65rem;
@@ -143,7 +168,7 @@ main {
   opacity: 0.85;
 }
 
-/* ==================== галерея ==================== */
+/* ==================== Галерея ==================== */
 .gallery {
   position: absolute;
   top: 64px;
@@ -153,46 +178,34 @@ main {
   z-index: 999;
   max-width: 600px;
   margin: 0 auto;
-
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 16px;
   padding: 12px;
   box-shadow: 0 40px 60px rgba(0, 0, 0, 0.3);
-
   overflow-y: auto;
   overflow: hidden;
-
   opacity: 0;
   transform: translateY(-20px) scale(0.96);
-  clip-path: inset(0 0 100% 0 round 16px); /* как крвер мниз */
+  clip-path: inset(0 0 100% 0 round 16px);
   pointer-events: none;
   display: none;
-  
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-    clip-path 0.5s ease;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), clip-path 0.5s ease;
 }
-
 .gallery.showing {
   display: block;
 }
-
 .gallery.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
-  clip-path: inset(0 0 0 0 round 16px); /* КОВЕр вниз виууп */
+  clip-path: inset(0 0 0 0 round 16px);
   pointer-events: auto;
 }
-
 .gallery-content {
   max-height: 100%;
   overflow-y: auto;
-  padding-right: 12px;  /* 🎯 отодвигает скролл трек */
+  padding-right: 12px;
 }
-
-
 .gallery-item {
   cursor: pointer;
   padding: 8px;
@@ -201,11 +214,6 @@ main {
   transition: transform 0.25s ease, 0.2s, color 0.2s;
   color: var(--text);
   user-select: text;
-}
-.gallery-item:hover {
-  background: var(--accent);
-  color: white;
-  transform: scale(1.01);
 }
 .gallery-item:active {
   background: var(--card-border);
@@ -233,7 +241,7 @@ main {
   opacity: 0.85;
 }
 
-/* ==================== все попапы ==================== */
+/* ==================== Попап ==================== */
 .popup {
   position: fixed;
   inset: 0;
@@ -251,12 +259,6 @@ main {
   animation: backdropFadeIn 0.3s forwards;
   z-index: -1;
 }
-.popup-button:hover {
-  transform: scale(1.02);
-  cursor: pointer;
-  transition: background 0.25s ease, transform 0.1s ease;
-  user-select: none;
-}
 .popup-button:active {
   transform: scale(0.96);
 }
@@ -272,7 +274,19 @@ main {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
   opacity: 0;
   transform: scale(0.95);
-  animation: popupFadeIn 0.3s ease forwards;
+  animation: popupFadeIn 0.8s ease forwards;
+}
+
+.popup-button {
+  margin-top: 16px;
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.25s ease, transform 0.2s ease;
 }
 .popup.hide .popup-backdrop {
   animation: backdropFadeOut 0.3s forwards;
@@ -283,41 +297,12 @@ main {
 .hidden {
   display: none;
 }
-@keyframes backdropFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes backdropFadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@keyframes popupFadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes popupFadeOut {
-  from { opacity: 1; transform: scale(1); }
-  to { opacity: 0; transform: scale(0.95); }
-}
-
 .detail-arabic {
   margin-bottom: 2px;
   font-size: 2.65rem;
   font-weight: 400;
 }
-.popup-content button {
-  margin-top: 16px;
-  background: var(--accent);
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-/* ==================== счестик ==================== */
+/* ==================== Счётчик ==================== */
 .round-counter {
   width: 60px;
   text-align: center;
@@ -330,7 +315,7 @@ main {
   flex-shrink: 0;
 }
 
-/* ==================== скролл ==================== */
+/* ==================== Скроллбар ==================== */
 *::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -347,7 +332,7 @@ body.dark *::-webkit-scrollbar-thumb {
   border-radius: 6px;
 }
 
-/* ==================== анимации ==================== */
+/* ==================== Анимации ==================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -358,12 +343,40 @@ body.dark *::-webkit-scrollbar-thumb {
     transform: scale(1);
   }
 }
-@keyframes galleryFlash {
+@keyframes backdropFadeIn {
   from {
-    opacity: 0.5;
+    opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes popupFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
   }
 }
 
@@ -406,7 +419,6 @@ body.dark *::-webkit-scrollbar-thumb {
   font-size: 1.1rem;
   cursor: pointer;
 }
-
 #pair-count-display {
   font-weight: 600;
   min-width: 24px;
@@ -414,6 +426,7 @@ body.dark *::-webkit-scrollbar-thumb {
   color: var(--text);
 }
 
+/* ==================== Мелкие правки ==================== */
 .small-arabic {
   font-size: 1.1rem !important;
 }
@@ -421,12 +434,3 @@ body.dark *::-webkit-scrollbar-thumb {
   font-size: 0.8rem !important;
   line-height: 1.1;
 }
-
-/* Это исправление визуального бага который испортил мне утро */
-@media (hover: hover) and (pointer: fine) {
-  .card:hover {
-    background: var(--accent);
-    color: white;
-  }
-}
-
