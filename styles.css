@@ -423,9 +423,10 @@ body.dark *::-webkit-scrollbar-thumb {
 }
 
 /* Это исправление визуального бага который испортил мне утро */
-@media (hover: none) and (pointer: coarse) {
+@media (hover: hover) and (pointer: fine) {
   .card:hover {
-    background: unset !important;
-    color: unset !important;
+    background: var(--accent);
+    color: white;
   }
 }
+
