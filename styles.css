@@ -170,6 +170,7 @@ main {
 
 /* ==================== Галерея ==================== */
 .gallery {
+  
   position: absolute;
   top: 64px;
   right: 16px;
@@ -203,11 +204,16 @@ main {
 }
 .gallery-content {
   max-height: 100%;
+  max-width: 100%;
   overflow-y: auto;
-  padding-right: 12px;
+  padding: 10px 12px 0px 10px; /* ← отступ слева увеличен */
+  position: relative;
+  z-index: 1; /* убедимся, что выделение не пробивает скругление */
 }
+
 .gallery-item {
   cursor: pointer;
+  
   padding: 8px;
   margin-bottom: 12px;
   border-radius: 8px;
@@ -333,6 +339,7 @@ body.dark *::-webkit-scrollbar-thumb {
 }
 
 /* ==================== Анимации ==================== */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
