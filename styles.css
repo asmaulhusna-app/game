@@ -421,3 +421,11 @@ body.dark *::-webkit-scrollbar-thumb {
   font-size: 0.8rem !important;
   line-height: 1.1;
 }
+
+/* Это исправление визуального бага который испортил мне утро */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover {
+    background: unset !important;
+    color: unset !important;
+  }
+}
