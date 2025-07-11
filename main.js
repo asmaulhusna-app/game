@@ -165,7 +165,7 @@ function toggleTheme() {
 }
 
 function changePairCount(delta) {
-  const min = 2, max = 5;
+  const min = 2, max = 8;
   const next = pairCount + delta;
   if (next >= min && next <= max) {
     pairCount = next;
