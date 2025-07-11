@@ -146,9 +146,10 @@ main {
 /* ==================== галерея ==================== */
 .gallery {
   position: absolute;
-  top: 60px;
+  top: 64px;
   right: 16px;
   left: 16px;
+  bottom: 47.5px;
   z-index: 999;
   max-width: 600px;
   margin: 0 auto;
@@ -164,7 +165,7 @@ main {
   max-height: 0;
 }
 .gallery.show {
-  max-height: 550px;
+  max-height: none;
   opacity: 1;
   transform: translateY(0);
   padding: 12px;
