@@ -141,15 +141,56 @@ function createGalleryItem(n, index) {
 }
 
 function renderGallery() {
-  gallery.innerHTML = '';
+  gallery.innerHTML = '<div class="gallery-content" id="gallery-content"></div>';
+  const container = document.getElementById('gallery-content');
   names.forEach((n, i) => {
-    gallery.appendChild(createGalleryItem(n, i));
+    container.appendChild(createGalleryItem(n, i));
   });
 }
 
+
+let isAnimating = false;
+
 function toggleGallery() {
-  gallery.classList.toggle('show');
+  const g = document.getElementById('gallery');
+
+  // Если сейчас в процессе анимации — игнорируем клик
+  if (isAnimating) return;
+
+  const isVisible = g.classList.contains('visible');
+
+  if (isVisible) {
+    isAnimating = true;
+    g.classList.remove('visible');
+
+    const onEnd = (e) => {
+      if (e.propertyName === 'opacity') {
+        g.classList.remove('showing');
+        g.removeEventListener('transitionend', onEnd);
+        isAnimating = false;
+      }
+    };
+
+    g.addEventListener('transitionend', onEnd);
+  } else {
+    g.classList.add('showing');
+    // Дать время на отрисовку перед добавлением visible
+    requestAnimationFrame(() => {
+      isAnimating = true;
+      g.classList.add('visible');
+
+      const onEnd = (e) => {
+        if (e.propertyName === 'opacity') {
+          g.removeEventListener('transitionend', onEnd);
+          isAnimating = false;
+        }
+      };
+
+      g.addEventListener('transitionend', onEnd);
+    });
+  }
 }
+
 
 function showDetailPopup(obj) {
   document.getElementById('detail-title').innerHTML =
