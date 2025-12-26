@@ -27,7 +27,19 @@ body {
   color: var(--text);
   transition: background 0.3s, color 0.3s;
 }
+.bottom-center-text {
+  position: fixed;
+  bottom: 20px;              /* отступ от низа */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #212121;
+
+  z-index: 1000;             /* чтобы был поверх */
+}
 /* ==================== кнопки и шапка ==================== */
 header {
   display: flex;
@@ -478,3 +490,4 @@ body.dark .gallery-content::-webkit-scrollbar-thumb {
   font-size: 0.8rem !important;
   line-height: 1.1;
 }
+
