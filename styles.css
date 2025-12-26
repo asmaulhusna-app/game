@@ -29,17 +29,21 @@ body {
 }
 .bottom-center-text {
   position: fixed;
-  bottom: 20px;              /* отступ от низа */
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
 
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: --card-bg;
+  color: var(--text);
+  text-align: center;
 
-  z-index: 1000;             /* чтобы был поверх */
+  pointer-events: none;   /* 🚫 нельзя нажать */
+  user-select: none;      /* 🚫 нельзя выделить */
+
+  z-index: 1;             /* ⬅ ниже кнопок и счётчика */
 }
+
 /* ==================== кнопки и шапка ==================== */
 header {
   display: flex;
@@ -469,7 +473,7 @@ body.dark .gallery-content::-webkit-scrollbar-thumb {
 }
 .floating-toggle {
   position: absolute;
-  right: -26px;
+  right: -30px;
   background: transparent;
   color: var(--text);
   font-size: 1.1rem;
@@ -490,5 +494,3 @@ body.dark .gallery-content::-webkit-scrollbar-thumb {
   font-size: 0.8rem !important;
   line-height: 1.1;
 }
-
-
