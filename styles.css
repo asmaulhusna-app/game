@@ -38,7 +38,7 @@ body {
   color: var(--text);
   text-align: center;
 
-  pointer-events: none;   /* 🚫 нельзя нажать */
+  
   user-select: none;      /* 🚫 нельзя выделить */
 
   z-index: 1;             /* ⬅ ниже кнопок и счётчика */
@@ -440,7 +440,7 @@ body.dark .gallery-content::-webkit-scrollbar-thumb {
   }
 }
 
-/* ==================== Плавающая панель ==================== */
+/* ==================== Счётчик пар ==================== */
 .floating-controls {
   position: fixed;
   bottom: 16px;
@@ -474,6 +474,7 @@ body.dark .gallery-content::-webkit-scrollbar-thumb {
 .floating-toggle {
   position: absolute;
   right: -30px;
+  user-select: none;      /* 🚫 нельзя выделить */
   background: transparent;
   color: var(--text);
   font-size: 1.1rem;
