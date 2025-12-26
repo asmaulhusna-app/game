@@ -1,6 +1,7 @@
 let pairCount = 3;
 let selected = [], matched = [], currentRound = [];
 let attempts = 0, totalAttempts = 0, roundsCompleted = 0, accuracyCounter = 0;
+let roundStartTime = 0;
 
 const grid = document.getElementById('game-grid');
 const gallery = document.getElementById('gallery');
@@ -43,6 +44,7 @@ function closePopup(popupId) {
 }
 
 function renderGameRound() {
+  roundStartTime = Date.now();
   grid.innerHTML = '';
   selected = [];
   matched = [];
@@ -103,14 +105,18 @@ function onRoundComplete() {
   accuracyCounter++;
   localStorage.setItem('roundsCompleted', roundsCompleted);
   document.getElementById('round-counter').textContent = roundsCompleted;
-
+  const totalMatches = pairCount * 3;
   if (accuracyCounter >= 3) {
-    const percent = Math.round((9 / totalAttempts) * 100);
+    
+    const percent = Math.round((totalMatches / totalAttempts) * 100);
     document.getElementById('accuracy-text').textContent =
-      `🎯 Ваша аккуратность: ${percent}% (${totalAttempts} попыток на 9 совпадений)`;
+      `🎯 Аккуратность: ${percent}% (${totalAttempts} попыток на ${totalMatches} совпадений)`;
     document.getElementById('accuracy-popup').classList.remove('hidden');
+    const timeSpent = Math.floor((Date.now() - roundStartTime) / 1000);
+    document.getElementById('time-spent').textContent = timeSpent;
     accuracyCounter = 0;
     totalAttempts = 0;
+    
   } else {
     renderGameRound();
   }
@@ -233,6 +239,7 @@ function changePairCount(delta) {
   const next = pairCount + delta;
   if (next >= min && next <= max) {
     pairCount = next;
+    localStorage.setItem('pairCount', pairCount); // ✅ сохраняем
     document.getElementById('pair-count-display').textContent = pairCount;
     renderGameRound();
   }
@@ -249,7 +256,10 @@ function toggleFloating() {
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark');
   }
+  
+  pairCount = parseInt(localStorage.getItem('pairCount')) || pairCount;  // ✅ восстановление количества пар
 
+  document.getElementById('pair-count-display').textContent = pairCount;
   roundsCompleted = parseInt(localStorage.getItem('roundsCompleted')) || 0;
   document.getElementById('round-counter').textContent = roundsCompleted;
 
