@@ -1,18 +1,18 @@
 /* ==================== основа ==================== */
 :root {
-  --bg: #f9fafb;
+  --bg: #f6f8fa;
   --text: #111827;
   --card-bg: #ffffff;
   --accent: #2563eb;
-  --card-border: #e5e7eb;
+  --card-border: #d6d8da;
   --selected: rgb(227, 227, 227);
 }
 body.dark {
-  --bg: #0f172a;
+  --bg: #0b1220;
   --text: #f1f5f9;
-  --card-bg: #1e293b;
+  --card-bg: #0f172a;
   --accent: #3b82f6;
-  --card-border: #334155;
+  --card-border: #202f45;
   --selected: #334155;
 }
 
